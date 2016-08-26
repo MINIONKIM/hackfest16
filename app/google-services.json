@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "720874787453",
+    "firebase_url": "https://hackfest16.firebaseio.com",
+    "project_id": "hackfest16",
+    "storage_bucket": "hackfest16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720874787453:android:f7d10a057cd6b8bd",
+        "android_client_info": {
+          "package_name": "me.spheric.hackfest16"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720874787453-lnmi094r19hc93rpldo38mc6cbc09ino.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.spheric.hackfest16",
+            "certificate_hash": "CF81AA84F2BB86680547F8E77D28D45DC0020215"
+          }
+        },
+        {
+          "client_id": "720874787453-cddoifhgsehnl800fvch1e76u0416lcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBatlxIdFtyYKsPeOIfkYA_ZQ_2ws017Hs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720874787453-cddoifhgsehnl800fvch1e76u0416lcb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
