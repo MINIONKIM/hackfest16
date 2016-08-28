@@ -9,8 +9,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="me.spheric.hackfest16.MainActivity">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="소방차"
+        android:id="@+id/btn_firetruck"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="152dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="민간인"
+        android:id="@+id/btn_np"
+        android:layout_alignTop="@+id/btn_firetruck"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

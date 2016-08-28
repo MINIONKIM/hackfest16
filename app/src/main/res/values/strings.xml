@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hackfest16</string>
+    <string name="title_activity_fire_truck">Map</string>
 </resources>
