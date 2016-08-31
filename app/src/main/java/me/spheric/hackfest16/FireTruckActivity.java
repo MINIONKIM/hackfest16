@@ -1,13 +1,16 @@
 package me.spheric.hackfest16;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -21,7 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class FireTruckActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class   FireTruckActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
                                                                    GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
@@ -44,8 +47,14 @@ public class FireTruckActivity extends FragmentActivity implements OnMapReadyCal
 
         buildGoogleApiClient();
 
-
+        findViewById(R.id.btn_go).setOnClickListener(mClickListener);
     }
+
+    Button.OnClickListener mClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+
+        }
+    };
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -53,7 +62,7 @@ public class FireTruckActivity extends FragmentActivity implements OnMapReadyCal
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(100); // Update location every second
 
-        if (ContextCompat.checkSelfPermission((Activity)this,
+        if (ContextCompat.checkSelfPermission(this, // Get permission to access users location data.
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
@@ -125,6 +134,7 @@ public class FireTruckActivity extends FragmentActivity implements OnMapReadyCal
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

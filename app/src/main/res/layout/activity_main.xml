@@ -12,17 +12,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="소방차"
+        android:text="소방관 모드"
         android:id="@+id/btn_firetruck"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="152dp" />
+        android:layout_marginStart="53dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="민간인"
+        android:text="사용자 모드"
         android:id="@+id/btn_np"
         android:layout_alignTop="@+id/btn_firetruck"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="44dp" />
 </RelativeLayout>
