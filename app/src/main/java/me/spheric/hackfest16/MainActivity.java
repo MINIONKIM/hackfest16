@@ -44,18 +44,26 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         findViewById(R.id.btn_firetruck).setOnClickListener(mClickListener);
+        findViewById(R.id.btn_gctest).setOnClickListener(mClickListenerGC);
     }
 
     Button.OnClickListener mClickListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-            String myText = "인천시 연수구 인천타워대로 241에 발생한 화재로 인해 출동하는 소방차가 약 400m 후방에서 접근중입니다.";
-            myTTS.speak(myText, TextToSpeech.QUEUE_FLUSH, null);
+            // String myText = "인천시 연수구 인천타워대로 241에 발생한 화재로 인해 출동하는 소방차가 약 400m 후방에서 접근중입니다.";
+            // myTTS.speak(myText, TextToSpeech.QUEUE_FLUSH, null);
 
             Intent intent = null;
             intent = new Intent(MainActivity.this, FireTruckActivity.class);
 
             startActivity(intent);
+
+        }
+    };
+
+    Button.OnClickListener mClickListenerGC = new View.OnClickListener() {
+        public void onClick(View v) {
+
 
         }
     };

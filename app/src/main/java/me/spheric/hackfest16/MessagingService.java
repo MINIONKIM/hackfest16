@@ -28,7 +28,7 @@ public class MessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         sendNotification(remoteMessage.getData().get("msg"));
     }
-    // [END receive_message]
+    // [END receive_essage]
 
     /**
      * Create and show a simple notification containing the received FCM message.

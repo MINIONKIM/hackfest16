@@ -28,7 +28,7 @@ public class InstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        System.out.println("------------------ REFRESHED -----------------");
+        Log.d(TAG, "------------------ REFRESHED -----------------");
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
         // If you want to send messages to this application instance or
@@ -48,8 +48,6 @@ public class InstanceIDService extends FirebaseInstanceIdService {
      */
     private void sendRegistrationToServer(String token) {
         // TODO: Implement this method to send token to your app server.
-
-        System.out.println("------------------ token reg -----------------");
 
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()

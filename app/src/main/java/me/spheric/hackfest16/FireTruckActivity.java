@@ -1,16 +1,15 @@
 package me.spheric.hackfest16;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,14 +23,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class   FireTruckActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class FireTruckActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
                                                                    GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
     Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    String lat, lon;
+    double lat, lon;
+    double dLat, dLon; // 목적지 lat,lon
 
     private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 111;
 
@@ -48,11 +48,28 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
         buildGoogleApiClient();
 
         findViewById(R.id.btn_go).setOnClickListener(mClickListener);
+
     }
 
     Button.OnClickListener mClickListener = new View.OnClickListener() {
         public void onClick(View v) {
 
+            EditText addr = (EditText)findViewById(R.id.editText);
+            AppController appc = new AppController();
+
+            DBConnector dbc = new DBConnector();
+            dbc.init("ICN1", dLat, dLon, 0, 0);
+            dbc.new AsyncCreateTable().execute();
+
+            GeoCoding gc = new GeoCoding();
+            try {
+                gc.GeoCode(addr.getText().toString());
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            LatLng dest = new LatLng(appc.getdLat(),appc.getdLon());
+            mMap.addMarker(new MarkerOptions().position(dest).title("Destination"));
         }
     };
 
@@ -62,6 +79,8 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(100); // Update location every second
 
+
+        /*--------------------------GET PERMISSION FOR LOCATION-------------------------------*/
         if (ContextCompat.checkSelfPermission(this, // Get permission to access users location data.
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -70,6 +89,7 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_FINE_LOCATION);
         }
+        /*--------------------------GET PERMISSION FOR LOCATION-------------------------------*/
 
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
@@ -77,8 +97,8 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
-            lat = String.valueOf(mLastLocation.getLatitude());
-            lon = String.valueOf(mLastLocation.getLongitude());
+            lat = mLastLocation.getLatitude();
+            lon = mLastLocation.getLongitude();
         }
     }
 
@@ -89,21 +109,27 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
 
     @Override
     public void onLocationChanged(Location location) {
-        lat = String.valueOf(location.getLatitude());
-        lon = String.valueOf(location.getLongitude());
+        lat = location.getLatitude();
+        lon = location.getLongitude();
 
-        DBConnector conn = new DBConnector("ICN001", 35.3324, 126.3324, location.getLatitude(), location.getLongitude());
+        AppController appc = new AppController();
+        appc.SetfCoord(lat, lon);
+
+        DBConnector conn = new DBConnector();
+        conn.init("ICN001", 35.3324, 126.3324, location.getLatitude(), location.getLongitude());
+
         conn.new AsyncUpstream().execute();
 
         System.out.println("Lat : " + lat + "   Lon : " + lon);
         putDot();
+
+        mMap.
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         buildGoogleApiClient();
     }
-
     synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -117,7 +143,6 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
         super.onStart();
         mGoogleApiClient.connect();
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -142,11 +167,14 @@ public class   FireTruckActivity extends FragmentActivity implements OnMapReadyC
 
     public void putDot()
     {
+
+        AppController appc = new AppController();
+
         LatLng a = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+        LatLng dest = new LatLng(appc.getdLat(),appc.getdLon());
 
         mMap.addMarker(new MarkerOptions().position(a).title(""));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(a));
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        //mMap.addMarker(new MarkerOptions().position(dest).title("Destination"));
     }
 
 }

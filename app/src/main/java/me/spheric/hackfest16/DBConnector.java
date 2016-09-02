@@ -29,7 +29,7 @@ public class DBConnector {
 
     double dx, dy, cx, cy;
 
-    DBConnector(String _ecode, double _dx, double _dy, double _cx, double _cy)
+    public void init(String _ecode, double _dx, double _dy, double _cx, double _cy)
     {
         ecode = _ecode;
         dx = _dx;
